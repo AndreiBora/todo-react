@@ -21,11 +21,18 @@ class Todos extends Component {
       },
     ],
   };
+
+  addNewTodo = (todoData) => {
+  	this.setState(prevState => ({
+    	todos: [...prevState.todos, todoData],
+    }));
+  };
+
   render() {
     return (
       <div>
         {this.state.todos.map((todo) => {
-          return <Todo key={todo.id} todo={todo} />;
+          return <Todo key={todo.id} todo={todo} handlerAddTodo={this.addNewTodo}/>;
         })}
       </div>
     );
