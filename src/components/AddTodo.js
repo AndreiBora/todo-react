@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import uuid from "uuid";
+import { Route, withRouter } from "react-router-dom";
 
 class AddTodo extends Component {
   state = { title: "", category: "", description: "" };
@@ -15,6 +16,7 @@ class AddTodo extends Component {
     };
     this.props.addTodo(newTodo);
     this.clearInput();
+    this.props.history.push("/");
   };
 
   clearInput() {
@@ -98,4 +100,4 @@ class AddTodo extends Component {
   }
 }
 
-export default AddTodo;
+export default withRouter(AddTodo);
