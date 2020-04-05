@@ -1,19 +1,30 @@
 import React, { Component } from "react";
+import uuid from "uuid";
 
 class AddTodo extends Component {
   state = { title: "", category: "", description: "" };
   handleSubmit = (event) => {
+    const { title, category, description } = this.state;
     event.preventDefault();
     const newTodo = {
-      id: Math.floor(Math.random() * 10) + 4,
-      title: this.state.title,
-      category: this.state.category,
-      description: this.state.description,
+      id: uuid(),
+      title,
+      category,
+      description,
       date: new Date(),
     };
     this.props.addTodo(newTodo);
-    // this.setState({ id: Math.floor(Math.random() * 10) + 3, title: "" });
+    this.clearInput();
   };
+
+  clearInput() {
+    this.setState({
+      title: "",
+      category: "",
+      description: "",
+    });
+  }
+
   render() {
     return (
       <div className="card mb-2">

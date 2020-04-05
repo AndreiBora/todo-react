@@ -41,6 +41,13 @@ class App extends React.Component {
     }));
   };
 
+  deleteTodoHandler = (id) => {
+    const newTodos = this.state.todos.filter((todo) => todo.id !== id);
+    this.setState({
+      todos: newTodos,
+    });
+  };
+
   render() {
     return (
       <div className="App container">
@@ -49,7 +56,10 @@ class App extends React.Component {
         <div className="row">
           <div className="col">
             <AddTodo addTodo={this.addNewTodo} />
-            <Todos todos={this.state.todos} />
+            <Todos
+              todos={this.state.todos}
+              deleteTodoHandler={this.deleteTodoHandler}
+            />
           </div>
         </div>
       </div>

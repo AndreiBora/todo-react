@@ -3,11 +3,17 @@ import Todo from "./Todo";
 
 class Todos extends Component {
   render() {
-    const { todos } = this.props;
+    const { todos, deleteTodoHandler } = this.props;
     return (
       <div>
         {todos.map((todo) => {
-          return <Todo key={todo.id} todo={todo} />;
+          return (
+            <Todo
+              key={todo.id}
+              todo={todo}
+              deleteTodoHandler={deleteTodoHandler}
+            />
+          );
         })}
       </div>
     );
