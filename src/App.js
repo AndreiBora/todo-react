@@ -52,14 +52,11 @@ class App extends React.Component {
   };
 
   updateTodoHandler = (todo) => {
-    const index = this.state.todos.findIndex((e, index) => {
-      console.log(e, index, todo);
-      if (e.id === todo.id) {
-        return index;
-      }
-    });
+    const index = this.state.todos.findIndex(
+      (oldTodo) => oldTodo.id == todo.id
+    );
     const copyTodo = [...this.state.todos];
-    copyTodo.splice(index, 1, todo);
+    let deleted = copyTodo.splice(index, 1, todo);
     this.setState({
       todos: copyTodo,
     });

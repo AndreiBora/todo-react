@@ -3,27 +3,39 @@ import uuid from "uuid";
 import { Route, withRouter } from "react-router-dom";
 
 class UpdateTodo extends Component {
-  state = { title: "", category: "", description: "" };
+  state = { id: "", title: "", category: "", description: "" };
   handleSubmit = (event) => {
-    const { title, category, description } = this.state;
+    const { id, title, category, description } = this.state;
     event.preventDefault();
-    const newTodo = {
-      id: uuid(),
+    const updatedTodo = {
+      id,
       title,
       category,
       description,
       date: new Date(),
     };
-    this.props.addTodo(newTodo);
+    this.props.updateTodoHandler(updatedTodo);
     this.clearInput();
     this.props.history.push("/");
   };
 
   clearInput() {
     this.setState({
+      id: "",
       title: "",
       category: "",
       description: "",
+    });
+  }
+
+  componentDidMount() {
+    let { id } = this.props.match.params;
+    const todo = this.props.todos.find((todo) => todo.id == id);
+    this.setState({
+      id,
+      title: todo.title,
+      category: todo.category,
+      description: todo.description,
     });
   }
 
