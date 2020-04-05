@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 class Todo extends Component {
@@ -18,6 +19,9 @@ class Todo extends Component {
   deleteTodo = (id) => {
     this.props.deleteTodoHandler(id);
   };
+  updateTodo = (todo) => {
+    console.log(todo);
+  };
   render() {
     const { todo } = this.props;
     return (
@@ -27,6 +31,11 @@ class Todo extends Component {
             onClick={this.deleteTodo.bind(this, todo.id)}
             style={timesBtnStyle}
             icon={faTimes}
+          />
+          <FontAwesomeIcon
+            onClick={this.updateTodo.bind(this, todo)}
+            style={timesBtnStyle}
+            icon={faEdit}
           />
           <div className="card-body">
             <h5 style={textStyle} className="card-title">

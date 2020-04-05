@@ -3,6 +3,7 @@ import "./App.css";
 import Todos from "./components/Todos";
 import NavBar from "./components/NavBar";
 import AddTodo from "./components/AddTodo";
+import UpdateTodo from "./components/UpdateTodo";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NotFound from "./components/NotFound";
@@ -50,6 +51,13 @@ class App extends React.Component {
     });
   };
 
+  updateTodoHandler = (todo) => {
+    const updatedTodo = this.state.todos.filter((todo) => todo.id === id);
+    this.setState({
+      todos: updatedTodo,
+    });
+  };
+
   render() {
     return (
       <Router>
@@ -64,6 +72,7 @@ class App extends React.Component {
                     path="/add-todo"
                     component={() => <AddTodo addTodo={this.addNewTodo} />}
                   />
+                  <Route exact path="/update-todo" component={UpdateTodo} />
                   <Route
                     exact
                     path="/"
