@@ -52,9 +52,16 @@ class App extends React.Component {
   };
 
   updateTodoHandler = (todo) => {
-    const updatedTodo = this.state.todos.filter((todo) => todo.id === id);
+    const index = this.state.todos.findIndex((e, index) => {
+      console.log(e, index, todo);
+      if (e.id === todo.id) {
+        return index;
+      }
+    });
+    const copyTodo = [...this.state.todos];
+    copyTodo.splice(index, 1, todo);
     this.setState({
-      todos: updatedTodo,
+      todos: copyTodo,
     });
   };
 
@@ -72,7 +79,15 @@ class App extends React.Component {
                     path="/add-todo"
                     component={() => <AddTodo addTodo={this.addNewTodo} />}
                   />
-                  <Route exact path="/update-todo" component={UpdateTodo} />
+                  <Route
+                    path="/update-todo/:id"
+                    component={() => (
+                      <UpdateTodo
+                        updateTodoHandler={this.updateTodoHandler}
+                        todos={this.state.todos}
+                      />
+                    )}
+                  />
                   <Route
                     exact
                     path="/"
