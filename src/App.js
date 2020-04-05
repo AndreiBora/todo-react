@@ -3,7 +3,9 @@ import "./App.css";
 import Todos from "./components/Todos";
 import NavBar from "./components/NavBar";
 import AddTodo from "./components/AddTodo";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import NotFound from "./components/NotFound";
 
 class App extends React.Component {
   state = {
@@ -41,18 +43,44 @@ class App extends React.Component {
     }));
   };
 
+  deleteTodoHandler = (id) => {
+    const newTodos = this.state.todos.filter((todo) => todo.id !== id);
+    this.setState({
+      todos: newTodos,
+    });
+  };
+
   render() {
     return (
-      <div className="App container">
-        <NavBar />
-
-        <div className="row">
-          <div className="col">
-            <AddTodo addTodo={this.addNewTodo} />
-            <Todos todos={this.state.todos} />
+      <Router>
+        <React.Fragment>
+          <NavBar />
+          <div className="App container">
+            <div className="row">
+              <div className="col">
+                <Switch>
+                  <Route
+                    exact
+                    path="/add-todo"
+                    component={() => <AddTodo addTodo={this.addNewTodo} />}
+                  />
+                  <Route
+                    exact
+                    path="/"
+                    component={() => (
+                      <Todos
+                        todos={this.state.todos}
+                        deleteTodoHandler={this.deleteTodoHandler}
+                      />
+                    )}
+                  />
+                  <Route component={NotFound} />
+                </Switch>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </React.Fragment>
+      </Router>
     );
   }
 }

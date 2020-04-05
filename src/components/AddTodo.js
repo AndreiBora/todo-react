@@ -1,19 +1,32 @@
 import React, { Component } from "react";
+import uuid from "uuid";
+import { Route, withRouter } from "react-router-dom";
 
 class AddTodo extends Component {
   state = { title: "", category: "", description: "" };
   handleSubmit = (event) => {
+    const { title, category, description } = this.state;
     event.preventDefault();
     const newTodo = {
-      id: Math.floor(Math.random() * 10) + 4,
-      title: this.state.title,
-      category: this.state.category,
-      description: this.state.description,
+      id: uuid(),
+      title,
+      category,
+      description,
       date: new Date(),
     };
     this.props.addTodo(newTodo);
-    // this.setState({ id: Math.floor(Math.random() * 10) + 3, title: "" });
+    this.clearInput();
+    this.props.history.push("/");
   };
+
+  clearInput() {
+    this.setState({
+      title: "",
+      category: "",
+      description: "",
+    });
+  }
+
   render() {
     return (
       <div className="card mb-2">
@@ -87,4 +100,4 @@ class AddTodo extends Component {
   }
 }
 
-export default AddTodo;
+export default withRouter(AddTodo);

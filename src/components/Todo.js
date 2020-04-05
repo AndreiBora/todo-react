@@ -15,12 +15,19 @@ class Todo extends Component {
     console.log(this.state);
   };
 
+  deleteTodo = (id) => {
+    this.props.deleteTodoHandler(id);
+  };
   render() {
     const { todo } = this.props;
     return (
       <div className="card mb-2">
         <div className="card-body p-2">
-          <FontAwesomeIcon style={timesBtnStyle} icon={faTimes} />
+          <FontAwesomeIcon
+            onClick={this.deleteTodo.bind(this, todo.id)}
+            style={timesBtnStyle}
+            icon={faTimes}
+          />
           <div className="card-body">
             <h5 style={textStyle} className="card-title">
               {todo.title}
