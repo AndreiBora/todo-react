@@ -3,6 +3,7 @@ import "./App.css";
 import Todos from "./components/Todos";
 import NavBar from "./components/NavBar";
 import AddTodo from "./components/AddTodo";
+import UpdateTodo from "./components/UpdateTodo";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NotFound from "./components/NotFound";
@@ -50,6 +51,17 @@ class App extends React.Component {
     });
   };
 
+  updateTodoHandler = (todo) => {
+    const index = this.state.todos.findIndex(
+      (oldTodo) => oldTodo.id == todo.id
+    );
+    const copyTodo = [...this.state.todos];
+    let deleted = copyTodo.splice(index, 1, todo);
+    this.setState({
+      todos: copyTodo,
+    });
+  };
+
   render() {
     return (
       <Router>
@@ -63,6 +75,15 @@ class App extends React.Component {
                     exact
                     path="/add-todo"
                     component={() => <AddTodo addTodo={this.addNewTodo} />}
+                  />
+                  <Route
+                    path="/update-todo/:id"
+                    component={() => (
+                      <UpdateTodo
+                        updateTodoHandler={this.updateTodoHandler}
+                        todos={this.state.todos}
+                      />
+                    )}
                   />
                   <Route
                     exact

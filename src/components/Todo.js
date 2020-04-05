@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 class Todo extends Component {
   state = {
@@ -28,6 +30,10 @@ class Todo extends Component {
             style={timesBtnStyle}
             icon={faTimes}
           />
+          <Link to={`/update-todo/${todo.id}`}>
+            <FontAwesomeIcon style={timesBtnStyle} icon={faEdit} />
+          </Link>
+
           <div className="card-body">
             <h5 style={textStyle} className="card-title">
               {todo.title}
