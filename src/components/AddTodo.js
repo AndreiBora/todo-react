@@ -55,7 +55,21 @@ class AddTodo extends Component {
                 Category
               </label>
               <div className="col-sm-10">
-                <input
+                <select
+                  className="form-control"
+                  id="category"
+                  value={this.state.category}
+                  onChange={(event) =>
+                    this.setState({ category: event.target.value })
+                  }
+                  required
+                >
+                  <option>Shopping</option>
+                  <option>Hobby</option>
+                  <option>Gym</option>
+                  <option>Food</option>
+                </select>
+                {/* <input
                   id="category"
                   type="text"
                   className="form-control"
@@ -65,7 +79,7 @@ class AddTodo extends Component {
                   }
                   placeholder="Todo category"
                   required
-                />
+                /> */}
               </div>
             </div>
             <div className="form-group row">

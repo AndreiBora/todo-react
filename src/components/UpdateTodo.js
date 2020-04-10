@@ -67,17 +67,20 @@ class UpdateTodo extends Component {
                 Category
               </label>
               <div className="col-sm-10">
-                <input
-                  id="category"
-                  type="text"
+                <select
                   className="form-control"
+                  id="category"
                   value={this.state.category}
                   onChange={(event) =>
                     this.setState({ category: event.target.value })
                   }
-                  placeholder="Todo category"
                   required
-                />
+                >
+                  <option>Shopping</option>
+                  <option>Hobby</option>
+                  <option>Gym</option>
+                  <option>Food</option>
+                </select>
               </div>
             </div>
             <div className="form-group row">
