@@ -3,6 +3,7 @@ import uuid from "uuid";
 import { withRouter } from "react-router-dom";
 import { useContext } from "react";
 import { TodoContext } from "../context/TodoContextProvider";
+import axios from "axios";
 
 const AddTodo = (props) => {
   const [title, setTitle] = useState("");
@@ -13,16 +14,16 @@ const AddTodo = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const newTodo = {
-      id: uuid(),
       title,
       category,
       description,
-      date: new Date(),
     };
 
-    dispatch({
-      type: "ADD_TODO",
-      payload: newTodo,
+    axios.post("http://localhost:8080/v1/todos", newTodo).then((todo) => {
+      dispatch({
+        type: "ADD_TODO",
+        payload: todo.data,
+      });
     });
 
     props.history.push("/");
