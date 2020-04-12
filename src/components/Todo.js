@@ -1,62 +1,53 @@
-import React, { Component } from "react";
+import { faEdit, faEyeSlash, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { TodoContext } from "../context/TodoContextProvider";
 
-class Todo extends Component {
-  state = {
-    showDescription: true,
+const Todo = (props) => {
+  const [showDescription, setShowDescription] = useState(true);
+  const { dispatch } = useContext(TodoContext);
+  const hideDescription = () => {
+    setShowDescription(!showDescription);
   };
 
-  hideDescription = () => {
-    this.setState({
-      showDescription: !this.state.showDescription,
-    });
-    console.log(this.state);
+  const deleteTodo = (id) => {
+    dispatch({ type: "DELETE_TODO", payload: id });
   };
 
-  deleteTodo = (id) => {
-    this.props.deleteTodoHandler(id);
-  };
-  render() {
-    const { todo } = this.props;
-    return (
-      <div className="card mb-2">
-        <div className="card-body p-2">
-          <FontAwesomeIcon
-            onClick={this.deleteTodo.bind(this, todo.id)}
-            style={timesBtnStyle}
-            icon={faTimes}
-          />
-          <Link to={`/update-todo/${todo.id}`}>
-            <FontAwesomeIcon style={timesBtnStyle} icon={faEdit} />
-          </Link>
+  const { todo } = props;
+  return (
+    <div className="card mb-2">
+      <div className="card-body p-2">
+        <FontAwesomeIcon
+          onClick={() => deleteTodo(todo.id)}
+          style={timesBtnStyle}
+          icon={faTimes}
+        />
+        <Link to={`/update-todo/${todo.id}`}>
+          <FontAwesomeIcon style={timesBtnStyle} icon={faEdit} />
+        </Link>
 
-          <div className="card-body">
-            <h5 style={textStyle} className="card-title">
-              {todo.title}
-            </h5>
-            <h6 className="card-subtitle mb-2 text-muted">{todo.category}</h6>
-            <h6 className="card-subtitle m-2">
-              <FontAwesomeIcon
-                onClick={this.hideDescription}
-                icon={faEyeSlash}
-              />
-            </h6>
-            {this.state.showDescription ? (
-              <p className="card-text">{todo.description}</p>
-            ) : null}
-          </div>
-          <div className="card-footer text-muted">
-            Posted date :{todo.date.toLocaleString()}
-          </div>
+        <div className="card-body">
+          <h5 style={textStyle} className="card-title">
+            {todo.title}
+          </h5>
+          <h6 className="card-subtitle mb-2 text-muted">{todo.category}</h6>
+          <h6 className="card-subtitle m-2">
+            <FontAwesomeIcon onClick={hideDescription} icon={faEyeSlash} />
+          </h6>
+          {showDescription ? (
+            <p className="card-text">{todo.description}</p>
+          ) : null}
+        </div>
+        <div className="card-footer text-muted">
+          Posted date :{todo.date.toLocaleString()}
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const textStyle = {
   color: "blue",
