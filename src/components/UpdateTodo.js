@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { withRouter } from "react-router-dom";
 import { TodoContext } from "../context/TodoContextProvider";
+import axios from "axios";
 
 const UpdateTodo = (props) => {
   const { todos, dispatch } = useContext(TodoContext);
@@ -14,17 +15,19 @@ const UpdateTodo = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const updatedTodo = {
-      id,
       title,
       category,
       description,
-      date: new Date(),
     };
 
-    dispatch({
-      type: "UPDATE_TODO",
-      payload: updatedTodo,
-    });
+    axios
+      .put(`http://localhost:8080/v1/todos/${id}`, updatedTodo)
+      .then((res) => {
+        dispatch({
+          type: "UPDATE_TODO",
+          payload: res.data,
+        });
+      });
 
     props.history.push("/");
   };

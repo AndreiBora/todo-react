@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { TodoContext } from "../context/TodoContextProvider";
+import axios from "axios";
 
 const Todo = (props) => {
   const [showDescription, setShowDescription] = useState(true);
@@ -13,7 +14,9 @@ const Todo = (props) => {
   };
 
   const deleteTodo = (id) => {
-    dispatch({ type: "DELETE_TODO", payload: id });
+    axios
+      .delete(`http://localhost:8080/v1/todos/${id}`)
+      .then((res) => dispatch({ type: "DELETE_TODO", payload: id }));
   };
 
   const { todo } = props;
